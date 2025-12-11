@@ -1,59 +1,54 @@
-package com.outsystems.dynamicappicon;
- 
+package com.dynamicappicon.plugin;   // CHANGE THIS LINE
+
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.ComponentName;
- 
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
- 
+
 public class DynamicIcon extends CordovaPlugin {
- 
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-        if ("changeIcon".equals(action)) {
-            String icon = args.optString(0);
-            switchIcon(icon, callbackContext);
+        if (action.equals("changeIcon")) {
+            try {
+                String iconName = args.getString(0);
+                changeIcon(iconName);
+                callbackContext.success();
+            } catch (Exception ex) {
+                callbackContext.error("Error: " + ex.getMessage());
+            }
             return true;
         }
         return false;
     }
- 
-    private void switchIcon(String icon, CallbackContext callback) {
+
+    private void changeIcon(String iconName) {
+
         Context context = cordova.getActivity().getApplicationContext();
         PackageManager pm = context.getPackageManager();
-        String pkg = context.getPackageName();
- 
-        String normalAlias = pkg + ".IconNormal";
-        String premiumAlias = pkg + ".IconPremium";
-        String privateAlias = pkg + ".IconPrivate";
- 
-        // Turn all off
-        setState(pm, pkg, normalAlias, false);
-        setState(pm, pkg, premiumAlias, false);
-        setState(pm, pkg, privateAlias, false);
- 
-        // Enable selected
-        if ("premium".equalsIgnoreCase(icon)) {
-            setState(pm, pkg, premiumAlias, true);
-        } else if ("private".equalsIgnoreCase(icon)) {
-            setState(pm, pkg, privateAlias, true);
-        } else {
-            setState(pm, pkg, normalAlias, true);
+
+        // Define all alias components
+        ComponentName iconNormal   = new ComponentName(context, "com.dynamicappicon.plugin.IconNormal");
+        ComponentName iconPremium  = new ComponentName(context, "com.dynamicappicon.plugin.IconPremium");
+        ComponentName iconPrivate  = new ComponentName(context, "com.dynamicappicon.plugin.IconPrivate");
+
+        // Disable all icons first
+        pm.setComponentEnabledSetting(iconNormal, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+
+        // Enable the selected one
+        if (iconName.equalsIgnoreCase("normal")) {
+            pm.setComponentEnabledSetting(iconNormal, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
         }
- 
-        callback.success("Icon changed");
-    }
- 
-    private void setState(PackageManager pm, String pkg, String alias, boolean enabled) {
-        ComponentName cn = new ComponentName(pkg, alias);
-        pm.setComponentEnabledSetting(
-                cn,
-                enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP
-        );
+        else if (iconName.equalsIgnoreCase("premium")) {
+            pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        }
+        else if (iconName.equalsIgnoreCase("private")) {
+            pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        }
     }
 }
- 
