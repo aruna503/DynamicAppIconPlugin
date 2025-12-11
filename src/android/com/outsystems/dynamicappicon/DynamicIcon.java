@@ -29,23 +29,25 @@ public class DynamicIcon extends CordovaPlugin {
         String premiumAlias = pkg + ".IconPremium";
         String privateAlias = pkg + ".IconPrivate";
  
-        setState(pm, normalAlias, false);
-        setState(pm, premiumAlias, false);
-        setState(pm, privateAlias, false);
+        // Turn all off
+        setState(pm, pkg, normalAlias, false);
+        setState(pm, pkg, premiumAlias, false);
+        setState(pm, pkg, privateAlias, false);
  
+        // Enable selected
         if ("premium".equalsIgnoreCase(icon)) {
-            setState(pm, premiumAlias, true);
+            setState(pm, pkg, premiumAlias, true);
         } else if ("private".equalsIgnoreCase(icon)) {
-            setState(pm, privateAlias, true);
+            setState(pm, pkg, privateAlias, true);
         } else {
-            setState(pm, normalAlias, true);
+            setState(pm, pkg, normalAlias, true);
         }
  
         callback.success("Icon changed");
     }
  
-    private void setState(PackageManager pm, String alias, boolean enabled) {
-        ComponentName cn = new ComponentName(alias.split("\\.")[0], alias);
+    private void setState(PackageManager pm, String pkg, String alias, boolean enabled) {
+        ComponentName cn = new ComponentName(pkg, alias);
         pm.setComponentEnabledSetting(
                 cn,
                 enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
