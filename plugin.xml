@@ -19,41 +19,40 @@
         </config-file>
 
 
-        <!-- ============================= -->
-        <!-- 1) “Fake” Activity to override the launcher icon safely -->
-        <!-- ============================= -->
+        <!-- =================================== -->
+        <!-- 1) Main Alias (DEFAULT LAUNCHER ICON) -->
+        <!-- =================================== -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-
-            <activity
+            <activity-alias
                 android:name=".MainAlias"
-                android:exported="true"
                 android:enabled="true"
-                android:icon="@mipmap/ic_launcher_normal">
+                android:exported="true"
+                android:icon="@mipmap/ic_launcher_normal"
+                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity">
 
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
 
-            </activity>
-
+            </activity-alias>
         </config-file>
 
 
-        <!-- ============================= -->
+        <!-- =================================== -->
         <!-- 2) Activity aliases for dynamic icons -->
-        <!-- ============================= -->
+        <!-- =================================== -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- NORMAL -->
+            <!-- NORMAL ICON -->
             <activity-alias
                 android:name=".IconNormal"
-                android:enabled="true"
+                android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_normal"
                 android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
 
-            <!-- PREMIUM -->
+            <!-- PREMIUM ICON -->
             <activity-alias
                 android:name=".IconPremium"
                 android:enabled="false"
@@ -61,7 +60,7 @@
                 android:icon="@mipmap/ic_launcher_premium"
                 android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
 
-            <!-- PRIVATE -->
+            <!-- PRIVATE ICON -->
             <activity-alias
                 android:name=".IconPrivate"
                 android:enabled="false"
@@ -72,32 +71,32 @@
         </config-file>
 
 
-        <!-- Java file -->
-        <source-file 
+        <!-- Java -->
+        <source-file
             src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
             target-dir="src/com/dynamicappicon/plugin" />
 
 
-        <!-- ICON RESOURCES -->
-        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_normal.png"   target="res/mipmap-mdpi/ic_launcher_normal.png" />
-        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_premium.png" target="res/mipmap-mdpi/ic_launcher_premium.png" />
-        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_private.png" target="res/mipmap-mdpi/ic_launcher_private.png" />
+        <!-- ICON RESOURCES (all densities) -->
+        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_normal.png"   target="res/mipmap-mdpi/ic_launcher_normal.png"/>
+        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_premium.png" target="res/mipmap-mdpi/ic_launcher_premium.png"/>
+        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_private.png" target="res/mipmap-mdpi/ic_launcher_private.png"/>
 
-        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_normal.png"   target="res/mipmap-hdpi/ic_launcher_normal.png" />
-        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_premium.png" target="res/mipmap-hdpi/ic_launcher_premium.png" />
-        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_private.png" target="res/mipmap-hdpi/ic_launcher_private.png" />
+        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_normal.png"   target="res/mipmap-hdpi/ic_launcher_normal.png"/>
+        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_premium.png" target="res/mipmap-hdpi/ic_launcher_premium.png"/>
+        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_private.png" target="res/mipmap-hdpi/ic_launcher_private.png"/>
 
-        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_normal.png"   target="res/mipmap-xhdpi/ic_launcher_normal.png" />
-        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_premium.png" target="res/mipmap-xhdpi/ic_launcher_premium.png" />
-        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_private.png" target="res/mipmap-xhdpi/ic_launcher_private.png" />
+        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_normal.png"   target="res/mipmap-xhdpi/ic_launcher_normal.png"/>
+        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_premium.png" target="res/mipmap-xhdpi/ic_launcher_premium.png"/>
+        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_private.png" target="res/mipmap-xhdpi/ic_launcher_private.png"/>
 
-        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_normal.png"   target="res/mipmap-xxhdpi/ic_launcher_normal.png" />
-        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_premium.png" target="res/mipmap-xxhdpi/ic_launcher_premium.png" />
-        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_private.png" target="res/mipmap-xxhdpi/ic_launcher_private.png" />
+        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_normal.png"   target="res/mipmap-xxhdpi/ic_launcher_normal.png"/>
+        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_premium.png" target="res/mipmap-xxhdpi/ic_launcher_premium.png"/>
+        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_private.png" target="res/mipmap-xxhdpi/ic_launcher_private.png"/>
 
-        <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_normal.png"   target="res/mipmap-xxxhdpi/ic_launcher_normal.png" />
-        <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_premium.png" target="res/mipmap-xxxhdpi/ic_launcher_premium.png" />
-        <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_private.png" target="res/mipmap-xxxhdpi/ic_launcher_private.png" />
+        <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_normal.png"  target="res/mipmap-xxxhdpi/ic_launcher_normal.png"/>
+        <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_premium.png" target="res/mipmap-xxxhdpi/ic_launcher_premium.png"/>
+        <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_private.png" target="res/mipmap-xxxhdpi/ic_launcher_private.png"/>
 
     </platform>
 
