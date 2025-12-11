@@ -1,0 +1,19 @@
+{
+  "name": "cordova-plugin-dynamicappicon",
+  "version": "1.0.0",
+  "description": "Plugin to dynamically change Android app icon for OutSystems mobile apps.",
+  "cordova": {
+    "id": "cordova-plugin-dynamicappicon",
+    "platforms": ["android"]
+  },
+  "keywords": [
+    "cordova",
+    "outsystems",
+    "android",
+    "dynamic",
+    "icon"
+  ],
+  "author": "aruna503",
+  "license": "MIT"
+}
+ 
