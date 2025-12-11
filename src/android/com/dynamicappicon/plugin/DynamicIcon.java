@@ -1,4 +1,4 @@
-package com.dynamicappicon.plugin;   // CHANGE THIS LINE
+package com.dynamicappicon.plugin;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,7 +12,7 @@ public class DynamicIcon extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-        if (action.equals("changeIcon")) {
+        if ("changeIcon".equals(action)) {
             try {
                 String iconName = args.getString(0);
                 changeIcon(iconName);
@@ -26,29 +26,30 @@ public class DynamicIcon extends CordovaPlugin {
     }
 
     private void changeIcon(String iconName) {
-        Context context = cordova.getActivity();
 
+        Context context = cordova.getActivity();
         PackageManager pm = context.getPackageManager();
 
-        // Define all alias components
-        ComponentName iconNormal   = new ComponentName(context, "com.dynamicappicon.plugin.IconNormal");
-        ComponentName iconPremium  = new ComponentName(context, "com.dynamicappicon.plugin.IconPremium");
-        ComponentName iconPrivate  = new ComponentName(context, "com.dynamicappicon.plugin.IconPrivate");
+        ComponentName iconNormal  = new ComponentName(context, "com.dynamicappicon.plugin.IconNormal");
+        ComponentName iconPremium = new ComponentName(context, "com.dynamicappicon.plugin.IconPremium");
+        ComponentName iconPrivate = new ComponentName(context, "com.dynamicappicon.plugin.IconPrivate");
 
-        // Disable all icons first
-        pm.setComponentEnabledSetting(iconNormal, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-        pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-        pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        int flags = PackageManager.DONT_KILL_APP | PackageManager.SYNCHRONOUS;
 
-        // Enable the selected one
-        if (iconName.equalsIgnoreCase("normal")) {
-            pm.setComponentEnabledSetting(iconNormal, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        // Disable all icons
+        pm.setComponentEnabledSetting(iconNormal,  PackageManager.COMPONENT_ENABLED_STATE_DISABLED, flags);
+        pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, flags);
+        pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, flags);
+
+        // Enable selected icon
+        if ("normal".equalsIgnoreCase(iconName)) {
+            pm.setComponentEnabledSetting(iconNormal, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flags);
         }
-        else if (iconName.equalsIgnoreCase("premium")) {
-            pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        else if ("premium".equalsIgnoreCase(iconName)) {
+            pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flags);
         }
-        else if (iconName.equalsIgnoreCase("private")) {
-            pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        else if ("private".equalsIgnoreCase(iconName)) {
+            pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flags);
         }
     }
 }
