@@ -5,14 +5,14 @@
 
     <name>Dynamic App Icon</name>
 
-    <!-- JS module -->
+    <!-- JS -->
     <js-module src="www/DynamicIcon.js" name="DynamicIcon">
         <clobbers target="DynamicIcon" />
     </js-module>
 
     <platform name="android">
 
-        <!-- Register plugin -->
+        <!-- Register Cordova plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
                 <param name="android-package" value="com.dynamicappicon.plugin.DynamicIcon" />
@@ -20,57 +20,55 @@
         </config-file>
 
 
-        <!-- REMOVE LAUNCHER FROM REAL MainActivity -->
-        <config-file target="AndroidManifest.xml"
-                     parent="/manifest/application/activity[@android:name='com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity']">
+        <!-- REMOVE LAUNCHER FROM OSLauncherActivity -->
+        <edit-config file="AndroidManifest.xml" mode="merge"
+                     target="/manifest/application/activity[@android:name='com.outsystems.plugins.launcher.OSLauncherActivity']">
+            <activity android:name="com.outsystems.plugins.launcher.OSLauncherActivity">
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW"/>
+                    <category android:name="android.intent.category.DEFAULT"/>
+                </intent-filter>
+            </activity>
+        </edit-config>
 
-            <!-- Remove LAUNCHER -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
 
-        </config-file>
-
-
-        <!-- ICON ACTIVITY ALIASES -->
+        <!-- ALIASES FOR DYNAMIC ICONS -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- NORMAL icon (default) -->
+            <!-- NORMAL ICON (default) -->
             <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal"
+                android:name="${applicationId}.IconNormal"
                 android:enabled="true"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_normal"
-                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity">
+                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity">
 
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN"/>
                     <category android:name="android.intent.category.LAUNCHER"/>
                 </intent-filter>
-
             </activity-alias>
 
-            <!-- PREMIUM -->
+            <!-- PREMIUM ICON -->
             <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium"
+                android:name="${applicationId}.IconPremium"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_premium"
-                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity"/>
+                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
 
-            <!-- PRIVATE -->
+            <!-- PRIVATE ICON -->
             <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate"
+                android:name="${applicationId}.IconPrivate"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_private"
-                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity"/>
+                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
 
         </config-file>
 
 
-        <!-- Java source -->
+        <!-- JAVA FILE -->
         <source-file src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
                      target-dir="src/com/dynamicappicon/plugin" />
 
