@@ -19,17 +19,10 @@
             </feature>
         </config-file>
 
-        <!-- REMOVE LAUNCHER INTENT FROM MAINACTIVITY -->
-        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:name='.MainActivity']">
-            <intent-filter android:label="">
-                <!-- empty to remove launcher role -->
-            </intent-filter>
-        </config-file>
-
         <!-- ACTIVITY ALIASES FOR DYNAMIC ICONS -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- NORMAL (default launcher) -->
+            <!-- NORMAL ICON (default launcher) -->
             <activity-alias
                 android:name=".IconNormal"
                 android:enabled="true"
@@ -44,7 +37,7 @@
                 </intent-filter>
             </activity-alias>
 
-            <!-- PREMIUM (no launcher intent) -->
+            <!-- PREMIUM ICON (no launcher intent) -->
             <activity-alias
                 android:name=".IconPremium"
                 android:enabled="false"
@@ -58,7 +51,7 @@
                 </intent-filter>
             </activity-alias>
 
-            <!-- PRIVATE (no launcher intent) -->
+            <!-- PRIVATE ICON (no launcher intent) -->
             <activity-alias
                 android:name=".IconPrivate"
                 android:enabled="false"
