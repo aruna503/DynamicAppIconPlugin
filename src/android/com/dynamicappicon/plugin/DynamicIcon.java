@@ -30,31 +30,31 @@ public class DynamicIcon extends CordovaPlugin {
         Context context = cordova.getActivity();
         PackageManager pm = context.getPackageManager();
 
-        String pkg = context.getPackageName();  // Dynamic OS package name
+        // Fully-qualified alias names
+        String base = "com.outsystemscloud.personalyybrgx5w.TestPlugin.";
 
-        // Activity aliases (dynamic)
-        ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
-        ComponentName iconPremium = new ComponentName(pkg, pkg + ".IconPremium");
-        ComponentName iconPrivate = new ComponentName(pkg, pkg + ".IconPrivate");
+        ComponentName normal  = new ComponentName(context, base + "IconNormal");
+        ComponentName premium = new ComponentName(context, base + "IconPremium");
+        ComponentName priv    = new ComponentName(context, base + "IconPrivate");
 
         int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         int flags   = PackageManager.DONT_KILL_APP;
 
-        // Disable all first
-        pm.setComponentEnabledSetting(iconNormal, disable, flags);
-        pm.setComponentEnabledSetting(iconPremium, disable, flags);
-        pm.setComponentEnabledSetting(iconPrivate, disable, flags);
+        // Disable all
+        pm.setComponentEnabledSetting(normal, disable, flags);
+        pm.setComponentEnabledSetting(premium, disable, flags);
+        pm.setComponentEnabledSetting(priv, disable, flags);
 
         // Enable selected
         if ("premium".equalsIgnoreCase(iconName)) {
-            pm.setComponentEnabledSetting(iconPremium, enable, flags);
+            pm.setComponentEnabledSetting(premium, enable, flags);
         }
         else if ("private".equalsIgnoreCase(iconName)) {
-            pm.setComponentEnabledSetting(iconPrivate, enable, flags);
+            pm.setComponentEnabledSetting(priv, enable, flags);
         }
         else {
-            pm.setComponentEnabledSetting(iconNormal, enable, flags);
+            pm.setComponentEnabledSetting(normal, enable, flags);
         }
     }
 }
