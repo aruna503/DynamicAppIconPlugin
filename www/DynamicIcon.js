@@ -3,5 +3,5 @@ var DynamicIcon = {
         cordova.exec(success, error, "DynamicIcon", "changeIcon", [iconName]);
     }
 };
- 
+
 module.exports = DynamicIcon;
