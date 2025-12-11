@@ -33,9 +33,10 @@ public class DynamicIcon extends CordovaPlugin {
         String pkg = context.getPackageName();  // com.outsystemscloud.xx.xx
 
         // Dynamic launcher aliases
-        ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
-        ComponentName iconPremium = new ComponentName(pkg, pkg + ".IconPremium");
-        ComponentName iconPrivate = new ComponentName(pkg, pkg + ".IconPrivate");
+       ComponentName iconNormal  = new ComponentName(pkg, "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal");
+       ComponentName iconPremium = new ComponentName(pkg, "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium");
+       ComponentName iconPrivate = new ComponentName(pkg, "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate");
+
 
         int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
