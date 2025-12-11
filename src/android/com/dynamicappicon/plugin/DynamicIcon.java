@@ -26,8 +26,8 @@ public class DynamicIcon extends CordovaPlugin {
     }
 
     private void changeIcon(String iconName) {
+        Context context = cordova.getActivity();
 
-        Context context = cordova.getActivity().getApplicationContext();
         PackageManager pm = context.getPackageManager();
 
         // Define all alias components
