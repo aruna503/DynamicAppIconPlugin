@@ -30,26 +30,41 @@ public class DynamicIcon extends CordovaPlugin {
         Context context = cordova.getActivity();
         PackageManager pm = context.getPackageManager();
 
-        ComponentName iconNormal  = new ComponentName(context, "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal");
-        ComponentName iconPremium = new ComponentName(context, "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium");
-        ComponentName iconPrivate = new ComponentName(context, "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate");
+        String pkg = context.getPackageName();
 
-        int flags = PackageManager.DONT_KILL_APP | PackageManager.SYNCHRONOUS;
+        // Launcher aliases
+        ComponentName mainAlias   = new ComponentName(pkg, pkg + ".MainAlias");
+        ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
+        ComponentName iconPremium = new ComponentName(pkg, pkg + ".IconPremium");
+        ComponentName iconPrivate = new ComponentName(pkg, pkg + ".IconPrivate");
 
-        // Disable all
-        pm.setComponentEnabledSetting(iconNormal,  PackageManager.COMPONENT_ENABLED_STATE_DISABLED, flags);
-        pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, flags);
-        pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, flags);
+        int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+        int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        int flags   = PackageManager.DONT_KILL_APP;
 
-        // Enable selected
+        // -------------------------------
+        // DISABLE ALL ICONS FIRST
+        // -------------------------------
+        pm.setComponentEnabledSetting(mainAlias, disable, flags);
+        pm.setComponentEnabledSetting(iconNormal, disable, flags);
+        pm.setComponentEnabledSetting(iconPremium, disable, flags);
+        pm.setComponentEnabledSetting(iconPrivate, disable, flags);
+
+        // -------------------------------
+        // ENABLE SELECTED ICON
+        // -------------------------------
         if ("normal".equalsIgnoreCase(iconName)) {
-            pm.setComponentEnabledSetting(iconNormal, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flags);
+            pm.setComponentEnabledSetting(iconNormal, enable, flags);
         }
         else if ("premium".equalsIgnoreCase(iconName)) {
-            pm.setComponentEnabledSetting(iconPremium, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flags);
+            pm.setComponentEnabledSetting(iconPremium, enable, flags);
         }
         else if ("private".equalsIgnoreCase(iconName)) {
-            pm.setComponentEnabledSetting(iconPrivate, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flags);
+            pm.setComponentEnabledSetting(iconPrivate, enable, flags);
+        }
+        else {
+            // fallback to main alias
+            pm.setComponentEnabledSetting(mainAlias, enable, flags);
         }
     }
 }
