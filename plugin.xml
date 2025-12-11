@@ -11,18 +11,16 @@
  
     <platform name="android">
  
-        <!-- Register Plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
-                <param name="android-package" value="com.outsystemscloud.personalyybrgx5w.TestPlugin.DynamicIcon" />
+                <param name="android-package" value="com.outsystems.dynamicappicon.DynamicIcon"/>
             </feature>
         </config-file>
  
-        <!-- Activity Aliases -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
  
             <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal"
+                android:name=".IconNormal"
                 android:enabled="true"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher"
@@ -35,7 +33,7 @@
             </activity-alias>
  
             <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium"
+                android:name=".IconPremium"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher"
@@ -43,7 +41,7 @@
                 android:targetActivity=".MainActivity" />
  
             <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate"
+                android:name=".IconPrivate"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher"
@@ -52,12 +50,10 @@
  
         </config-file>
  
-        <!-- Java File -->
         <source-file
             src="src/android/com/outsystems/dynamicappicon/DynamicIcon.java"
-            target-dir="src/com/outsystemscloud/personalyybrgx5w/TestPlugin" />
+            target-dir="src/com/outsystems/dynamicappicon" />
  
     </platform>
  
 </plugin>
- 
