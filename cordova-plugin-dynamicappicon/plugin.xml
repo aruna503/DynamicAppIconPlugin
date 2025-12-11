@@ -60,8 +60,9 @@
  
         </config-file>
  
-        <source-file src="src/android/com/outsystems/dynamicappicon/DynamicIcon.java"
-                     target-dir="src/android/com/outsystems/dynamicappicon" />
+        <source-file
+    src="src/android/com/outsystems/dynamicappicon/DynamicIcon.java"
+    target-dir="src/android/com/outsystems/dynamicappicon" />
  
     </platform>
  
