@@ -11,7 +11,7 @@
 
     <platform name="android">
 
-        <!-- Register Cordova plugin -->
+        <!-- Register plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
                 <param name="android-package" value="com.dynamicappicon.plugin.DynamicIcon" />
@@ -19,49 +19,51 @@
         </config-file>
 
 
-        <!-- REMOVE LAUNCHER FROM REAL MAIN ACTIVITY -->
+        <!-- REMOVE LAUNCHER INTENT FROM OSLauncherActivity -->
         <config-file target="AndroidManifest.xml"
-                     parent="/manifest/application/activity[@android:name='com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity']">
+                     parent="/manifest/application/activity[@android:name='com.outsystems.plugins.launcher.OSLauncherActivity']">
+
+            <!-- Replace MAIN/LAUNCHER with a neutral filter -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
         </config-file>
 
 
-        <!-- ADD ICON ALIASES -->
+        <!-- ICON ACTIVITY ALIASES -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- NORMAL -->
+            <!-- NORMAL ICON -->
             <activity-alias
                 android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal"
                 android:enabled="true"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_normal"
-                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity">
+                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity">
 
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN"/>
                     <category android:name="android.intent.category.LAUNCHER"/>
                 </intent-filter>
-
             </activity-alias>
 
-            <!-- PREMIUM -->
+            <!-- PREMIUM ICON -->
             <activity-alias
                 android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_premium"
-                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity"/>
+                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity"/>
 
-            <!-- PRIVATE -->
+            <!-- PRIVATE ICON -->
             <activity-alias
                 android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_private"
-                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity"/>
+                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity"/>
 
         </config-file>
 
@@ -69,6 +71,7 @@
         <!-- JAVA -->
         <source-file src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
                      target-dir="src/com/dynamicappicon/plugin" />
+
 
         <!-- ICON FILES -->
         <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_normal.png"   target="res/mipmap-mdpi/ic_launcher_normal.png"/>
