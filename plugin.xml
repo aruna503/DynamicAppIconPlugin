@@ -5,13 +5,14 @@
 
     <name>Dynamic App Icon</name>
 
+    <!-- JS module -->
     <js-module src="www/DynamicIcon.js" name="DynamicIcon">
         <clobbers target="DynamicIcon" />
     </js-module>
 
     <platform name="android">
 
-        <!-- Register plugin -->
+        <!-- Register Cordova plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
                 <param name="android-package" value="com.dynamicappicon.plugin.DynamicIcon" />
@@ -19,77 +20,85 @@
         </config-file>
 
 
-        <!-- REMOVE LAUNCHER INTENT FROM OSLauncherActivity -->
+        <!-- REMOVE LAUNCHER FROM REAL MAIN ACTIVITY -->
         <config-file target="AndroidManifest.xml"
-                     parent="/manifest/application/activity[@android:name='com.outsystems.plugins.launcher.OSLauncherActivity']">
+            parent="/manifest/application/activity[@android:name='com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity']">
 
-            <!-- Replace MAIN/LAUNCHER with a neutral filter -->
+            <!-- Remove LAUNCHER intent -->
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </config-file>
 
 
-        <!-- ICON ACTIVITY ALIASES -->
+        <!-- ADD ICON ALIASES -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- NORMAL ICON -->
+            <!-- NORMAL ICON (default launcher) -->
             <activity-alias
                 android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal"
                 android:enabled="true"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_normal"
-                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity">
+                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity">
 
                 <intent-filter>
-                    <action android:name="android.intent.action.MAIN"/>
-                    <category android:name="android.intent.category.LAUNCHER"/>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
+
             </activity-alias>
 
-            <!-- PREMIUM ICON -->
+
+            <!-- PREMIUM ICON (hidden initially) -->
             <activity-alias
                 android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_premium"
-                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity"/>
+                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity" />
 
-            <!-- PRIVATE ICON -->
+
+            <!-- PRIVATE ICON (hidden initially) -->
             <activity-alias
                 android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate"
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_private"
-                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity"/>
+                android:targetActivity="com.outsystemscloud.personalyybrgx5w.TestPlugin.MainActivity" />
 
         </config-file>
 
 
-        <!-- JAVA -->
-        <source-file src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
-                     target-dir="src/com/dynamicappicon/plugin" />
+        <!-- JAVA source -->
+        <source-file
+            src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
+            target-dir="src/com/dynamicappicon/plugin" />
 
 
-        <!-- ICON FILES -->
-        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_normal.png"   target="res/mipmap-mdpi/ic_launcher_normal.png"/>
-        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_premium.png"  target="res/mipmap-mdpi/ic_launcher_premium.png"/>
-        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_private.png"  target="res/mipmap-mdpi/ic_launcher_private.png"/>
+        <!-- ICON RESOURCES -->
+        <!-- MDPI -->
+        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_normal.png" target="res/mipmap-mdpi/ic_launcher_normal.png"/>
+        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_premium.png" target="res/mipmap-mdpi/ic_launcher_premium.png"/>
+        <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_private.png" target="res/mipmap-mdpi/ic_launcher_private.png"/>
 
-        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_normal.png"   target="res/mipmap-hdpi/ic_launcher_normal.png"/>
-        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_premium.png"  target="res/mipmap-hdpi/ic_launcher_premium.png"/>
-        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_private.png"  target="res/mipmap-hdpi/ic_launcher_private.png"/>
+        <!-- HDPI -->
+        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_normal.png" target="res/mipmap-hdpi/ic_launcher_normal.png"/>
+        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_premium.png" target="res/mipmap-hdpi/ic_launcher_premium.png"/>
+        <resource-file src="src/android/res/mipmap-hdpi/ic_launcher_private.png" target="res/mipmap-hdpi/ic_launcher_private.png"/>
 
-        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_normal.png"  target="res/mipmap-xhdpi/ic_launcher_normal.png"/>
+        <!-- XHDPI -->
+        <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_normal.png" target="res/mipmap-xhdpi/ic_launcher_normal.png"/>
         <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_premium.png" target="res/mipmap-xhdpi/ic_launcher_premium.png"/>
         <resource-file src="src/android/res/mipmap-xhdpi/ic_launcher_private.png" target="res/mipmap-xhdpi/ic_launcher_private.png"/>
 
-        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_normal.png"  target="res/mipmap-xxhdpi/ic_launcher_normal.png"/>
+        <!-- XXHDPI -->
+        <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_normal.png" target="res/mipmap-xxhdpi/ic_launcher_normal.png"/>
         <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_premium.png" target="res/mipmap-xxhdpi/ic_launcher_premium.png"/>
         <resource-file src="src/android/res/mipmap-xxhdpi/ic_launcher_private.png" target="res/mipmap-xxhdpi/ic_launcher_private.png"/>
 
+        <!-- XXXHDPI -->
         <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_normal.png" target="res/mipmap-xxxhdpi/ic_launcher_normal.png"/>
         <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_premium.png" target="res/mipmap-xxxhdpi/ic_launcher_premium.png"/>
         <resource-file src="src/android/res/mipmap-xxxhdpi/ic_launcher_private.png" target="res/mipmap-xxxhdpi/ic_launcher_private.png"/>
