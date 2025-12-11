@@ -1,59 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<plugin id="cordova-plugin-dynamicappicon" version="1.0.0"
-        xmlns="http://apache.org/cordova/ns/plugins"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+package com.outsystems.dynamicappicon;
  
-    <name>Dynamic App Icon</name>
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.ComponentName;
  
-    <js-module src="www/DynamicIcon.js" name="DynamicIcon">
-        <clobbers target="DynamicIcon" />
-    </js-module>
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+import org.json.JSONArray;
  
-    <platform name="android">
+public class DynamicIcon extends CordovaPlugin {
  
-        <config-file target="config.xml" parent="/*">
-            <feature name="DynamicIcon">
-                <param name="android-package" value="com.outsystemscloud.personalyybrgx5w.TestPlugin.DynamicIcon" />
-            </feature>
-        </config-file>
+    @Override
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
+        if ("changeIcon".equals(action)) {
+            String icon = args.optString(0);
+            switchIcon(icon, callbackContext);
+            return true;
+        }
+        return false;
+    }
  
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            
-            <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal"
-                android:enabled="true"
-                android:exported="true"
-                android:icon="@mipmap/ic_launcher"
-                android:label="@string/app_name"
-                android:targetActivity=".MainActivity">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            </activity-alias>
+    private void switchIcon(String icon, CallbackContext callback) {
+        Context context = cordova.getActivity().getApplicationContext();
+        PackageManager pm = context.getPackageManager();
+        String pkg = context.getPackageName();
  
-            <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium"
-                android:enabled="false"
-                android:exported="true"
-                android:icon="@mipmap/ic_launcher"
-                android:label="@string/app_name"
-                android:targetActivity=".MainActivity" />
+        String normalAlias = pkg + ".IconNormal";
+        String premiumAlias = pkg + ".IconPremium";
+        String privateAlias = pkg + ".IconPrivate";
  
-            <activity-alias
-                android:name="com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate"
-                android:enabled="false"
-                android:exported="true"
-                android:icon="@mipmap/ic_launcher"
-                android:label="@string/app_name"
-                android:targetActivity=".MainActivity" />
+        setState(pm, normalAlias, false);
+        setState(pm, premiumAlias, false);
+        setState(pm, privateAlias, false);
  
-        </config-file>
+        if ("premium".equalsIgnoreCase(icon)) {
+            setState(pm, premiumAlias, true);
+        } else if ("private".equalsIgnoreCase(icon)) {
+            setState(pm, privateAlias, true);
+        } else {
+            setState(pm, normalAlias, true);
+        }
  
-        <source-file
-            src="src/android/DynamicIcon.java"
-            target-dir="src/com/outsystemscloud/personalyybrgx5w/TestPlugin" />
+        callback.success("Icon changed");
+    }
  
-    </platform>
+    private void setState(PackageManager pm, String alias, boolean enabled) {
+        ComponentName cn = new ComponentName(alias.split("\\.")[0], alias);
+        pm.setComponentEnabledSetting(
+                cn,
+                enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+        );
+    }
+}
  
-</plugin>
