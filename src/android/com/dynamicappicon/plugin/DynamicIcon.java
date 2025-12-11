@@ -32,8 +32,7 @@ public class DynamicIcon extends CordovaPlugin {
 
         String pkg = context.getPackageName();
 
-        // Launcher aliases
-        ComponentName mainAlias   = new ComponentName(pkg, pkg + ".MainAlias");
+        // Activity aliases defined in plugin.xml
         ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
         ComponentName iconPremium = new ComponentName(pkg, pkg + ".IconPremium");
         ComponentName iconPrivate = new ComponentName(pkg, pkg + ".IconPrivate");
@@ -42,17 +41,12 @@ public class DynamicIcon extends CordovaPlugin {
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         int flags   = PackageManager.DONT_KILL_APP;
 
-        // -------------------------------
-        // DISABLE ALL ICONS FIRST
-        // -------------------------------
-        pm.setComponentEnabledSetting(mainAlias, disable, flags);
+        // Disable all aliases
         pm.setComponentEnabledSetting(iconNormal, disable, flags);
         pm.setComponentEnabledSetting(iconPremium, disable, flags);
         pm.setComponentEnabledSetting(iconPrivate, disable, flags);
 
-        // -------------------------------
-        // ENABLE SELECTED ICON
-        // -------------------------------
+        // Enable selected icon
         if ("normal".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconNormal, enable, flags);
         }
@@ -61,10 +55,6 @@ public class DynamicIcon extends CordovaPlugin {
         }
         else if ("private".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconPrivate, enable, flags);
-        }
-        else {
-            // fallback to main alias
-            pm.setComponentEnabledSetting(mainAlias, enable, flags);
         }
     }
 }
