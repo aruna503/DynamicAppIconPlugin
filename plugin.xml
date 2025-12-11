@@ -12,23 +12,25 @@
 
     <platform name="android">
 
-        <!-- Register plugin with Cordova -->
+        <!-- Register plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
                 <param name="android-package" value="com.dynamicappicon.plugin.DynamicIcon" />
             </feature>
         </config-file>
 
-        <!-- REMOVE LAUNCHER INTENT FROM MAIN ACTIVITY -->
+        <!-- REMOVE LAUNCHER INTENT FROM CURRENT MAIN ACTIVITY -->
+        <!-- Works for all MABS versions including MABS 12 -->
         <config-file target="AndroidManifest.xml"
-                     parent="/manifest/application/activity[@android:name='com.outsystemscloud.personalyybrgx5w.testplugin.MainActivity']">
+                     parent="/manifest/application/activity[intent-filter/category[@android:name='android.intent.category.LAUNCHER']]">
             <intent-filter>
+                <!-- replace launcher with neutral filter -->
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </config-file>
 
-        <!-- ACTIVITY ALIASES FOR DYNAMIC ICON SWITCHING -->
+        <!-- ACTIVITY ALIASES FOR DYNAMIC ICONS -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
             <!-- NORMAL ICON (default launcher icon) -->
@@ -81,7 +83,7 @@
             src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
             target-dir="src/com/dynamicappicon/plugin"/>
 
-        <!-- ICONS -->
+        <!-- ICON RESOURCES -->
         <!-- MDPI -->
         <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_normal.png"   target="res/mipmap-mdpi/ic_launcher_normal.png"/>
         <resource-file src="src/android/res/mipmap-mdpi/ic_launcher_premium.png" target="res/mipmap-mdpi/ic_launcher_premium.png"/>
