@@ -6,14 +6,14 @@
 
     <name>Dynamic App Icon</name>
 
-    <!-- JavaScript interface -->
+    <!-- JS interface -->
     <js-module src="www/DynamicIcon.js" name="DynamicIcon">
         <clobbers target="DynamicIcon" />
     </js-module>
 
     <platform name="android">
 
-        <!-- Register Cordova feature -->
+        <!-- Register Cordova plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
                 <param name="android-package"
@@ -21,31 +21,19 @@
             </feature>
         </config-file>
 
-        <!-- ❌ REMOVE launcher from MainActivity -->
-        <config-file
-            target="AndroidManifest.xml"
-            parent="/manifest/application/activity[@android:name='${applicationId}.MainActivity']/intent-filter/category[@android:name='android.intent.category.LAUNCHER']"
-            mode="remove" />
-
-        <!-- ✅ Activity aliases (ONLY launcher entries) -->
+        <!-- =============================== -->
+        <!-- ALL launcher aliases DISABLED -->
+        <!-- =============================== -->
         <config-file target="AndroidManifest.xml"
                      parent="/manifest/application">
 
-            <!-- NORMAL (default on install) -->
             <activity-alias
                 android:name=".IconNormal"
-                android:enabled="true"
+                android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_normal"
-                android:targetActivity="${applicationId}.MainActivity">
+                android:targetActivity="${applicationId}.MainActivity" />
 
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN"/>
-                    <category android:name="android.intent.category.LAUNCHER"/>
-                </intent-filter>
-            </activity-alias>
-
-            <!-- PREMIUM -->
             <activity-alias
                 android:name=".IconPremium"
                 android:enabled="false"
@@ -53,7 +41,6 @@
                 android:icon="@mipmap/ic_launcher_premium"
                 android:targetActivity="${applicationId}.MainActivity" />
 
-            <!-- PRIVATE -->
             <activity-alias
                 android:name=".IconPrivate"
                 android:enabled="false"
@@ -64,7 +51,7 @@
         </config-file>
 
         <!-- ========================= -->
-        <!-- ICON RESOURCES (MANDATORY) -->
+        <!-- ICON RESOURCES (REQUIRED) -->
         <!-- ========================= -->
 
         <!-- NORMAL -->
@@ -111,4 +98,3 @@
     </platform>
 
 </plugin>
-
