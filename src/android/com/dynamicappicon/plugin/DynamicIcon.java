@@ -30,31 +30,30 @@ public class DynamicIcon extends CordovaPlugin {
         Context context = cordova.getActivity();
         PackageManager pm = context.getPackageManager();
 
-        // Fully-qualified alias names
         String base = "com.outsystemscloud.personalyybrgx5w.TestPlugin.";
 
-        ComponentName normal  = new ComponentName(context, base + "IconNormal");
-        ComponentName premium = new ComponentName(context, base + "IconPremium");
-        ComponentName priv    = new ComponentName(context, base + "IconPrivate");
+        ComponentName iconNormal  = new ComponentName(context, base + "IconNormal");
+        ComponentName iconPremium = new ComponentName(context, base + "IconPremium");
+        ComponentName iconPrivate = new ComponentName(context, base + "IconPrivate");
 
         int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         int flags   = PackageManager.DONT_KILL_APP;
 
-        // Disable all
-        pm.setComponentEnabledSetting(normal, disable, flags);
-        pm.setComponentEnabledSetting(premium, disable, flags);
-        pm.setComponentEnabledSetting(priv, disable, flags);
+        // Disable all icons
+        pm.setComponentEnabledSetting(iconNormal, disable, flags);
+        pm.setComponentEnabledSetting(iconPremium, disable, flags);
+        pm.setComponentEnabledSetting(iconPrivate, disable, flags);
 
         // Enable selected
         if ("premium".equalsIgnoreCase(iconName)) {
-            pm.setComponentEnabledSetting(premium, enable, flags);
+            pm.setComponentEnabledSetting(iconPremium, enable, flags);
         }
         else if ("private".equalsIgnoreCase(iconName)) {
-            pm.setComponentEnabledSetting(priv, enable, flags);
+            pm.setComponentEnabledSetting(iconPrivate, enable, flags);
         }
         else {
-            pm.setComponentEnabledSetting(normal, enable, flags);
+            pm.setComponentEnabledSetting(iconNormal, enable, flags);
         }
     }
 }
