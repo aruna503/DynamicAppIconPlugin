@@ -21,15 +21,10 @@
             </feature>
         </config-file>
 
-        <!-- ANDROID MANIFEST -->
+        <!-- Android Manifest: ONLY aliases -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- DISABLE DEFAULT LAUNCHER -->
-            <activity
-                android:name="com.outsystems.plugins.launcher.OSLauncherActivity"
-                android:enabled="false" />
-
-            <!-- NORMAL ICON -->
+            <!-- NORMAL icon (default on install) -->
             <activity-alias
                 android:name=".IconNormal"
                 android:enabled="true"
@@ -43,7 +38,7 @@
                 </intent-filter>
             </activity-alias>
 
-            <!-- PREMIUM ICON -->
+            <!-- PREMIUM icon -->
             <activity-alias
                 android:name=".IconPremium"
                 android:enabled="false"
@@ -51,7 +46,7 @@
                 android:icon="@mipmap/ic_launcher_premium"
                 android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
 
-            <!-- PRIVATE ICON -->
+            <!-- PRIVATE icon -->
             <activity-alias
                 android:name=".IconPrivate"
                 android:enabled="false"
@@ -61,11 +56,7 @@
 
         </config-file>
 
-        <!-- JAVA -->
+        <!-- Java -->
         <source-file
             src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
-            target-dir="src/com/dynamicappicon/plugin" />
-
-    </platform>
-
-</plugin>
+            target-dir="src/com/dynamicapp
