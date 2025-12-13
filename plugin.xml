@@ -21,11 +21,17 @@
             </feature>
         </config-file>
 
-        <!-- Activity aliases (launcher icons) -->
+        <!-- ❌ REMOVE launcher from MainActivity -->
+        <config-file
+            target="AndroidManifest.xml"
+            parent="/manifest/application/activity[@android:name='${applicationId}.MainActivity']/intent-filter/category[@android:name='android.intent.category.LAUNCHER']"
+            mode="remove" />
+
+        <!-- ✅ Activity aliases (ONLY launcher entries) -->
         <config-file target="AndroidManifest.xml"
                      parent="/manifest/application">
 
-            <!-- DEFAULT icon -->
+            <!-- NORMAL (default on install) -->
             <activity-alias
                 android:name=".IconNormal"
                 android:enabled="true"
@@ -39,7 +45,7 @@
                 </intent-filter>
             </activity-alias>
 
-            <!-- PREMIUM icon -->
+            <!-- PREMIUM -->
             <activity-alias
                 android:name=".IconPremium"
                 android:enabled="false"
@@ -47,7 +53,7 @@
                 android:icon="@mipmap/ic_launcher_premium"
                 android:targetActivity="${applicationId}.MainActivity" />
 
-            <!-- PRIVATE icon -->
+            <!-- PRIVATE -->
             <activity-alias
                 android:name=".IconPrivate"
                 android:enabled="false"
@@ -105,3 +111,4 @@
     </platform>
 
 </plugin>
+
