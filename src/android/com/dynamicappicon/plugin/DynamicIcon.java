@@ -42,7 +42,7 @@ public class DynamicIcon extends CordovaPlugin {
         int flags   = PackageManager.DONT_KILL_APP;
 
         // Disable all aliases
-        pm.setComponentEnabledSetting(iconNormal, disable, flags);
+        pm.setComponentEnabledSetting(iconNormal,  disable, flags);
         pm.setComponentEnabledSetting(iconPremium, disable, flags);
         pm.setComponentEnabledSetting(iconPrivate, disable, flags);
 
