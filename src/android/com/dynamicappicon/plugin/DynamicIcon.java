@@ -33,32 +33,27 @@ public class DynamicIcon extends CordovaPlugin {
         PackageManager pm = context.getPackageManager();
         String pkg = context.getPackageName();
 
-        ComponentName defaultLauncher =
-                new ComponentName(pkg, "com.outsystems.plugins.launcher.OSLauncherActivity");
+        ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
+        ComponentName iconPremium = new ComponentName(pkg, pkg + ".IconPremium");
+        ComponentName iconPrivate = new ComponentName(pkg, pkg + ".IconPrivate");
 
-        ComponentName iconNormal =
-                new ComponentName(pkg, pkg + ".IconNormal");
-        ComponentName iconPremium =
-                new ComponentName(pkg, pkg + ".IconPremium");
-        ComponentName iconPrivate =
-                new ComponentName(pkg, pkg + ".IconPrivate");
-
-        int enable = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+        int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-        int flags = PackageManager.DONT_KILL_APP;
+        int flags   = PackageManager.DONT_KILL_APP;
 
-        // Disable ALL
-        pm.setComponentEnabledSetting(defaultLauncher, disable, flags);
+        // Disable all aliases
         pm.setComponentEnabledSetting(iconNormal, disable, flags);
         pm.setComponentEnabledSetting(iconPremium, disable, flags);
         pm.setComponentEnabledSetting(iconPrivate, disable, flags);
 
-        // Enable selected
+        // Enable selected alias
         if ("premium".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconPremium, enable, flags);
-        } else if ("private".equalsIgnoreCase(iconName)) {
+        }
+        else if ("private".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconPrivate, enable, flags);
-        } else {
+        }
+        else {
             pm.setComponentEnabledSetting(iconNormal, enable, flags);
         }
     }
