@@ -1,5 +1,5 @@
 var DynamicIcon = {
-    changeIcon: function(iconName, success, error) {
+    changeIcon: function (iconName, success, error) {
         cordova.exec(
             success,
             error,
