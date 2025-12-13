@@ -1,38 +1,42 @@
-<plugin id="cordova-plugin-dynamicappicon" version="1.0.0"
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-dynamicappicon"
+        version="1.0.0"
         xmlns="http://apache.org/cordova/ns/plugins"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <name>Dynamic App Icon</name>
 
+    <!-- JS interface -->
     <js-module src="www/DynamicIcon.js" name="DynamicIcon">
         <clobbers target="DynamicIcon" />
     </js-module>
 
     <platform name="android">
 
-        <!-- Register plugin -->
+        <!-- Register Cordova feature -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
-                <param name="android-package" value="com.dynamicappicon.plugin.DynamicIcon" />
+                <param name="android-package"
+                       value="com.dynamicappicon.plugin.DynamicIcon" />
             </feature>
         </config-file>
 
-        <!-- ADD ICON LAUNCHER ALIASES -->
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <!-- Activity aliases for launcher icons -->
+        <config-file target="AndroidManifest.xml"
+                     parent="/manifest/application">
 
-            <!-- NORMAL icon (default) -->
+            <!-- DEFAULT icon -->
             <activity-alias
                 android:name=".IconNormal"
                 android:enabled="true"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_normal"
-                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity">
+                android:targetActivity="${applicationId}.MainActivity">
 
                 <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
+                    <action android:name="android.intent.action.MAIN"/>
+                    <category android:name="android.intent.category.LAUNCHER"/>
                 </intent-filter>
-
             </activity-alias>
 
             <!-- PREMIUM icon -->
@@ -41,7 +45,7 @@
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_premium"
-                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
+                android:targetActivity="${applicationId}.MainActivity" />
 
             <!-- PRIVATE icon -->
             <activity-alias
@@ -49,13 +53,14 @@
                 android:enabled="false"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_private"
-                android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
+                android:targetActivity="${applicationId}.MainActivity" />
 
         </config-file>
 
-        <!-- JAVA -->
-        <source-file src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
-                     target-dir="src/com/dynamicappicon/plugin" />
+        <!-- Java source -->
+        <source-file
+            src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
+            target-dir="src/com/dynamicappicon/plugin" />
 
     </platform>
 
