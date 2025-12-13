@@ -7,7 +7,7 @@
 
     <name>Dynamic App Icon</name>
 
-    <!-- JS -->
+    <!-- JavaScript interface -->
     <js-module src="www/DynamicIcon.js" name="DynamicIcon">
         <clobbers target="DynamicIcon" />
     </js-module>
@@ -17,21 +17,21 @@
         <!-- Register plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
-                <param name="android-package" value="com.dynamicappicon.plugin.DynamicIcon" />
+                <param name="android-package"
+                       value="com.dynamicappicon.plugin.DynamicIcon" />
             </feature>
         </config-file>
 
-        <!-- Android Manifest: ONLY aliases -->
+        <!-- Android Manifest: ONLY activity-alias -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- NORMAL icon (default on install) -->
+            <!-- DEFAULT / NORMAL icon -->
             <activity-alias
                 android:name=".IconNormal"
                 android:enabled="true"
                 android:exported="true"
                 android:icon="@mipmap/ic_launcher_normal"
                 android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity">
-
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.LAUNCHER" />
@@ -56,7 +56,11 @@
 
         </config-file>
 
-        <!-- Java -->
+        <!-- Java source -->
         <source-file
             src="src/android/com/dynamicappicon/plugin/DynamicIcon.java"
-            target-dir="src/com/dynamicapp
+            target-dir="src/com/dynamicappicon/plugin" />
+
+    </platform>
+
+</plugin>
