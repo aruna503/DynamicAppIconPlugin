@@ -31,8 +31,6 @@ public class DynamicIcon extends CordovaPlugin {
 
         Context context = cordova.getActivity();
         PackageManager pm = context.getPackageManager();
-
-        // IMPORTANT: dynamic package name (OutSystems changes it)
         String pkg = context.getPackageName();
 
         ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
@@ -43,19 +41,15 @@ public class DynamicIcon extends CordovaPlugin {
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         int flags   = PackageManager.DONT_KILL_APP;
 
-        // Disable all icons
         pm.setComponentEnabledSetting(iconNormal, disable, flags);
         pm.setComponentEnabledSetting(iconPremium, disable, flags);
         pm.setComponentEnabledSetting(iconPrivate, disable, flags);
 
-        // Enable selected icon
         if ("premium".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconPremium, enable, flags);
-        }
-        else if ("private".equalsIgnoreCase(iconName)) {
+        } else if ("private".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconPrivate, enable, flags);
-        }
-        else {
+        } else {
             pm.setComponentEnabledSetting(iconNormal, enable, flags);
         }
     }
