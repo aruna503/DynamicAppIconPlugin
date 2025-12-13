@@ -17,7 +17,7 @@ public class DynamicIcon extends CordovaPlugin {
             try {
                 String iconName = args.getString(0);
                 changeIcon(iconName);
-                callbackContext.success("Icon change triggered");
+                callbackContext.success();
             } catch (Exception e) {
                 callbackContext.error(e.getMessage());
             }
@@ -33,18 +33,27 @@ public class DynamicIcon extends CordovaPlugin {
         PackageManager pm = context.getPackageManager();
         String pkg = context.getPackageName();
 
-        ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
-        ComponentName iconPremium = new ComponentName(pkg, pkg + ".IconPremium");
-        ComponentName iconPrivate = new ComponentName(pkg, pkg + ".IconPrivate");
+        ComponentName defaultLauncher =
+                new ComponentName(pkg, "com.outsystems.plugins.launcher.OSLauncherActivity");
 
-        int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+        ComponentName iconNormal =
+                new ComponentName(pkg, pkg + ".IconNormal");
+        ComponentName iconPremium =
+                new ComponentName(pkg, pkg + ".IconPremium");
+        ComponentName iconPrivate =
+                new ComponentName(pkg, pkg + ".IconPrivate");
+
+        int enable = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-        int flags   = PackageManager.DONT_KILL_APP;
+        int flags = PackageManager.DONT_KILL_APP;
 
+        // Disable ALL
+        pm.setComponentEnabledSetting(defaultLauncher, disable, flags);
         pm.setComponentEnabledSetting(iconNormal, disable, flags);
         pm.setComponentEnabledSetting(iconPremium, disable, flags);
         pm.setComponentEnabledSetting(iconPrivate, disable, flags);
 
+        // Enable selected
         if ("premium".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconPremium, enable, flags);
         } else if ("private".equalsIgnoreCase(iconName)) {
