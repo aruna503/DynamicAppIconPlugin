@@ -12,16 +12,18 @@ public class DynamicIcon extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
+
         if ("changeIcon".equals(action)) {
             try {
                 String iconName = args.getString(0);
                 changeIcon(iconName);
-                callbackContext.success();
-            } catch (Exception ex) {
-                callbackContext.error("Error: " + ex.getMessage());
+                callbackContext.success("Icon change triggered");
+            } catch (Exception e) {
+                callbackContext.error(e.getMessage());
             }
             return true;
         }
+
         return false;
     }
 
@@ -30,21 +32,12 @@ public class DynamicIcon extends CordovaPlugin {
         Context context = cordova.getActivity();
         PackageManager pm = context.getPackageManager();
 
-        // FULL qualified alias names (MANDATORY)
-        ComponentName iconNormal  = new ComponentName(
-                context,
-                "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal"
-        );
+        // IMPORTANT: dynamic package name (OutSystems changes it)
+        String pkg = context.getPackageName();
 
-        ComponentName iconPremium = new ComponentName(
-                context,
-                "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium"
-        );
-
-        ComponentName iconPrivate = new ComponentName(
-                context,
-                "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate"
-        );
+        ComponentName iconNormal  = new ComponentName(pkg, pkg + ".IconNormal");
+        ComponentName iconPremium = new ComponentName(pkg, pkg + ".IconPremium");
+        ComponentName iconPrivate = new ComponentName(pkg, pkg + ".IconPrivate");
 
         int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
@@ -55,7 +48,7 @@ public class DynamicIcon extends CordovaPlugin {
         pm.setComponentEnabledSetting(iconPremium, disable, flags);
         pm.setComponentEnabledSetting(iconPrivate, disable, flags);
 
-        // Enable selected
+        // Enable selected icon
         if ("premium".equalsIgnoreCase(iconName)) {
             pm.setComponentEnabledSetting(iconPremium, enable, flags);
         }
