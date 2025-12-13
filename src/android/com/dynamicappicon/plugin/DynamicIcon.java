@@ -30,12 +30,21 @@ public class DynamicIcon extends CordovaPlugin {
         Context context = cordova.getActivity();
         PackageManager pm = context.getPackageManager();
 
-        String pkg = context.getPackageName();  
-        // Example: pkg = "com.outsystemscloud.personalyybrgx5w.TestPlugin"
+        // FULL qualified alias names (MANDATORY)
+        ComponentName iconNormal  = new ComponentName(
+                context,
+                "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconNormal"
+        );
 
-        ComponentName iconNormal  = new ComponentName(context, pkg + ".IconNormal");
-        ComponentName iconPremium = new ComponentName(context, pkg + ".IconPremium");
-        ComponentName iconPrivate = new ComponentName(context, pkg + ".IconPrivate");
+        ComponentName iconPremium = new ComponentName(
+                context,
+                "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPremium"
+        );
+
+        ComponentName iconPrivate = new ComponentName(
+                context,
+                "com.outsystemscloud.personalyybrgx5w.TestPlugin.IconPrivate"
+        );
 
         int enable  = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         int disable = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
