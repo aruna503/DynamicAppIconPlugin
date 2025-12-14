@@ -17,25 +17,28 @@
         <!-- Register plugin -->
         <config-file target="config.xml" parent="/*">
             <feature name="DynamicIcon">
-                <param name="android-package"
-                       value="com.dynamicappicon.plugin.DynamicIcon" />
+                <param
+                    name="android-package"
+                    value="com.dynamicappicon.plugin.DynamicIcon" />
             </feature>
         </config-file>
 
-        <!-- Android Manifest: ONLY activity-alias -->
+        <!-- Android Manifest: ONLY activity-alias (no launcher activity override) -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-            <!-- DEFAULT / NORMAL icon -->
+            <!-- NORMAL icon (default launcher icon) -->
             <activity-alias
                 android:name=".IconNormal"
                 android:enabled="true"
                 android:exported="true"
-                android:icon="@mipmap/ic_launcher_normal"
+                android:icon="@mipmap/ic_dyn_normal"
                 android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity">
+
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
+
             </activity-alias>
 
             <!-- PREMIUM icon -->
@@ -43,7 +46,7 @@
                 android:name=".IconPremium"
                 android:enabled="false"
                 android:exported="true"
-                android:icon="@mipmap/ic_launcher_premium"
+                android:icon="@mipmap/ic_dyn_premium"
                 android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
 
             <!-- PRIVATE icon -->
@@ -51,7 +54,7 @@
                 android:name=".IconPrivate"
                 android:enabled="false"
                 android:exported="true"
-                android:icon="@mipmap/ic_launcher_private"
+                android:icon="@mipmap/ic_dyn_private"
                 android:targetActivity="com.outsystems.plugins.launcher.OSLauncherActivity" />
 
         </config-file>
